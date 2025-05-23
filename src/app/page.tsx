@@ -228,7 +228,7 @@ export default function Home() {
                 },
                 {
                   quote:
-                    "I've been using VibeTravel guides for years. They never disappoint with their local insights and tips.",
+                    "I&apos;ve been using VibeTravel guides for years. They never disappoint with their local insights and tips.",
                   name: "James T.",
                   location: "London",
                 },
@@ -242,7 +242,7 @@ export default function Home() {
                         </span>
                       ))}
                     </div>
-                    <p className="italic text-muted-foreground flex-1">"{testimonial.quote}"</p>
+                    <p className="italic text-muted-foreground flex-1">&quot;{testimonial.quote}&quot;</p>
                     <div className="mt-6 pt-6 border-t">
                       <p className="font-medium">{testimonial.name}</p>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
@@ -296,7 +296,7 @@ export default function Home() {
               <div>
                 <h2 className="text-3xl font-bold mb-6">Get in Touch</h2>
                 <p className="text-slate-300 mb-8">
-                  Have questions about our guides or services? Want to collaborate? We'd love to hear from you!
+                  Have questions about our guides or services? Want to collaborate? We&apos;d love to hear from you!
                 </p>
 
                 <div className="space-y-4">
