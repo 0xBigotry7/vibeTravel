@@ -103,6 +103,18 @@ export default function Home() {
                   image: "/costa-rica.jpg",
                   icon: <Compass className="h-5 w-5" />,
                 },
+                {
+                  title: "Miami Magic",
+                  description: "Experience vibrant nightlife, stunning beaches, and Art Deco architecture in Miami",
+                  image: "/miami.jpg",
+                  icon: <Globe className="h-5 w-5 text-pink-400" />,
+                },
+                {
+                  title: "Orlando Adventures",
+                  description: "Enjoy world-class theme parks, family fun, and sunny escapes in Orlando",
+                  image: "/orlando.jpg",
+                  icon: <MapPin className="h-5 w-5 text-orange-400" />,
+                },
               ].map((guide, index) => (
                 <Card key={index} className="overflow-hidden group">
                   <div className="relative h-64 overflow-hidden">
