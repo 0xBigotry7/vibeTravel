@@ -3,11 +3,24 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { MapPin, Compass, Mail, TreePalmIcon as PalmTree, Globe, Users } from "lucide-react"
+import { getAllGuidesData, GuideData } from "@/lib/guides";
+import SubscribeForm from "@/components/SubscribeForm";
+import ContactForm from "@/components/ContactForm"; // Added import
 
-export default function Home() {
+// Helper for icon mapping
+const iconMap: { [key: string]: React.ReactElement } = {
+  PalmTree: <PalmTree className="h-5 w-5 text-primary" />,
+  Globe: <Globe className="h-5 w-5 text-primary" />,
+  Compass: <Compass className="h-5 w-5 text-primary" />,
+  MapPin: <MapPin className="h-5 w-5 text-primary" />,
+};
+
+export default async function Home() { // Made component async
+  const guides = await getAllGuidesData(); // Fetch guides data
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Navigation */}
@@ -27,122 +40,9 @@ export default function Home() {
             <Link href="#subscribe" className="text-sm font-medium hover:text-teal-500 transition-colors">
               Subscribe
             </Link>
-            <Link href="#contact" className="text-sm font-medium hover:text-teal-500 transition-colors">
-              Contact
-            </Link>
-          </nav>
-          <div>
-            <Button variant="default" className="bg-teal-500 hover:bg-teal-600">
-              Join the Club
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="/hero-image.jpg"
-              alt="Tropical beach paradise"
-              fill
-              priority
-              className="object-cover brightness-[0.85]"
-            />
-          </div>
-          <div className="container relative z-10 flex flex-col items-center text-center gap-6 px-4">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-md">
-              Discover Your Perfect <span className="text-teal-400">Vibe</span>
-            </h1>
-            <p className="max-w-[800px] text-lg md:text-xl text-white/90 drop-shadow">
-              Curated travel guides and personalized itineraries for the modern explorer
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 mt-6">
-              <Button size="lg" className="bg-teal-500 hover:bg-teal-600 text-white">
-                Explore Guides
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
-              >
-                Plan Your Trip
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Destinations */}
-        <section id="guides" className="py-20 bg-white">
-          <div className="container px-4">
-            <div className="flex flex-col items-center text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Ultimate Travel Guides</h2>
-              <p className="text-muted-foreground max-w-[700px]">
-                Carefully curated guides to help you experience the best each destination has to offer
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Bali Bliss",
-                  description: "Discover hidden temples, pristine beaches, and the best local cuisine",
-                  image: "/bali.jpg",
-                  icon: <PalmTree className="h-5 w-5" />,
-                },
-                {
-                  title: "Tokyo Wonders",
-                  description: "Navigate the bustling metropolis with insider tips on food, culture and nightlife",
-                  image: "/tokyo.jpg",
-                  icon: <Globe className="h-5 w-5" />,
-                },
-                {
-                  title: "Costa Rica Adventure",
-                  description: "Explore rainforests, volcanoes and beaches in this eco-paradise",
-                  image: "/costa-rica.jpg",
-                  icon: <Compass className="h-5 w-5" />,
-                },
-                {
-                  title: "Miami Magic",
-                  description: "Experience vibrant nightlife, stunning beaches, and Art Deco architecture in Miami",
-                  image: "/miami.jpg",
-                  icon: <Globe className="h-5 w-5 text-pink-400" />,
-                },
-                {
-                  title: "Orlando Adventures",
-                  description: "Enjoy world-class theme parks, family fun, and sunny escapes in Orlando",
-                  image: "/orlando.jpg",
-                  icon: <MapPin className="h-5 w-5 text-orange-400" />,
-                },
-              ].map((guide, index) => (
-                <Card key={index} className="overflow-hidden group">
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={guide.image || "/placeholder.svg"}
-                      alt={guide.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                    <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white">
-                      {guide.icon}
-                      <span className="font-medium">{guide.title}</span>
-                    </div>
-                  </div>
-                  <CardContent className="p-6">
-                    <p className="text-muted-foreground mb-4">{guide.description}</p>
-                    <Button variant="link" className="p-0 text-teal-600 hover:text-teal-700">
-                      Read the guide →
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
             <div className="flex justify-center mt-12">
-              <Button variant="outline" className="border-teal-500 text-teal-600 hover:bg-teal-50">
-                View All Guides
+              <Button variant="outline" className="border-teal-500 text-teal-600 hover:bg-teal-50" asChild>
+                <Link href="/#guides">View All Guides</Link>
               </Button>
             </div>
           </div>
@@ -278,17 +178,7 @@ export default function Home() {
                   <p className="text-muted-foreground mb-6">
                     Subscribe to our newsletter for exclusive travel tips, guides, and special offers
                   </p>
-                  <form className="space-y-4">
-                    <div>
-                      <Input type="text" placeholder="Your name" className="border-slate-200" />
-                    </div>
-                    <div>
-                      <Input type="email" placeholder="Your email" className="border-slate-200" />
-                    </div>
-                    <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                      Subscribe to Beehiiv Blog
-                    </Button>
-                  </form>
+                  <SubscribeForm />
                   <p className="text-xs text-muted-foreground mt-4">
                     By subscribing, you agree to our privacy policy and terms of service.
                   </p>
@@ -344,31 +234,7 @@ export default function Home() {
               </div>
 
               <div>
-                <form className="space-y-4">
-                  <div>
-                    <Input
-                      type="text"
-                      placeholder="Your name"
-                      className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-400"
-                    />
-                  </div>
-                  <div>
-                    <Input
-                      type="email"
-                      placeholder="Your email"
-                      className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-400"
-                    />
-                  </div>
-                  <div>
-                    <Textarea
-                      placeholder="Your message"
-                      className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-400 min-h-[120px]"
-                    />
-                  </div>
-                  <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                    Send Message
-                  </Button>
-                </form>
+                <ContactForm />
               </div>
             </div>
           </div>
@@ -394,22 +260,23 @@ export default function Home() {
               <h3 className="font-medium text-white mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="hover:text-teal-400 transition-colors">
+                  <Link href="/#guides" className="hover:text-teal-400 transition-colors">
                     Travel Guides
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-teal-400 transition-colors">
+                  <Link href="/#services" className="hover:text-teal-400 transition-colors">
                     Services
                   </Link>
                 </li>
                 <li>
+                  {/* TODO: Create About Us page or section */}
                   <Link href="#" className="hover:text-teal-400 transition-colors">
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-teal-400 transition-colors">
+                  <Link href="/#contact" className="hover:text-teal-400 transition-colors">
                     Contact
                   </Link>
                 </li>
@@ -420,16 +287,19 @@ export default function Home() {
               <h3 className="font-medium text-white mb-4">Legal</h3>
               <ul className="space-y-2">
                 <li>
+                  {/* TODO: Create Privacy Policy page */}
                   <Link href="#" className="hover:text-teal-400 transition-colors">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
+                  {/* TODO: Create Terms of Service page */}
                   <Link href="#" className="hover:text-teal-400 transition-colors">
                     Terms of Service
                   </Link>
                 </li>
                 <li>
+                  {/* TODO: Create Cookie Policy page */}
                   <Link href="#" className="hover:text-teal-400 transition-colors">
                     Cookie Policy
                   </Link>
