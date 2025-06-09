@@ -5,9 +5,18 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { MapPin, Compass, Mail, TreePalmIcon as PalmTree, Globe, Users } from "lucide-react"
+import { MapPin, Compass, Mail, TreePalmIcon as PalmTree, Users } from "lucide-react"
+import { fetchBeehiivPosts } from '@/lib/fetchBeehiivPosts'
 
-export default function Home() {
+interface BeehiivPost {
+  title: string;
+  link: string;
+  pubDate: string;
+  description: string;
+}
+
+export default async function Home() {
+  const posts: BeehiivPost[] = await fetchBeehiivPosts('https://rss.beehiiv.com/feeds/EiaFGtMMhr.xml', 5)
   return (
     <div className="flex min-h-screen flex-col">
       {/* Navigation */}
@@ -73,77 +82,29 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Featured Destinations */}
+        {/* Ultimate Travel Guides (Beehiiv Blog) */}
         <section id="guides" className="py-20 bg-white">
           <div className="container px-4">
             <div className="flex flex-col items-center text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Ultimate Travel Guides</h2>
               <p className="text-muted-foreground max-w-[700px]">
-                Carefully curated guides to help you experience the best each destination has to offer
+                Latest stories and tips from our Beehiiv-powered travel blog
               </p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Bali Bliss",
-                  description: "Discover hidden temples, pristine beaches, and the best local cuisine",
-                  image: "/bali.jpg",
-                  icon: <PalmTree className="h-5 w-5" />,
-                },
-                {
-                  title: "Tokyo Wonders",
-                  description: "Navigate the bustling metropolis with insider tips on food, culture and nightlife",
-                  image: "/tokyo.jpg",
-                  icon: <Globe className="h-5 w-5" />,
-                },
-                {
-                  title: "Costa Rica Adventure",
-                  description: "Explore rainforests, volcanoes and beaches in this eco-paradise",
-                  image: "/costa-rica.jpg",
-                  icon: <Compass className="h-5 w-5" />,
-                },
-                {
-                  title: "Miami Magic",
-                  description: "Experience vibrant nightlife, stunning beaches, and Art Deco architecture in Miami",
-                  image: "/miami.jpg",
-                  icon: <Globe className="h-5 w-5 text-pink-400" />,
-                },
-                {
-                  title: "Orlando Adventures",
-                  description: "Enjoy world-class theme parks, family fun, and sunny escapes in Orlando",
-                  image: "/orlando.jpg",
-                  icon: <MapPin className="h-5 w-5 text-orange-400" />,
-                },
-              ].map((guide, index) => (
-                <Card key={index} className="overflow-hidden group">
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={guide.image || "/placeholder.svg"}
-                      alt={guide.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                    <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white">
-                      {guide.icon}
-                      <span className="font-medium">{guide.title}</span>
-                    </div>
-                  </div>
+              {posts.map((post: BeehiivPost) => (
+                <Card key={post.link} className="overflow-hidden group">
                   <CardContent className="p-6">
-                    <p className="text-muted-foreground mb-4">{guide.description}</p>
-                    <Button variant="link" className="p-0 text-teal-600 hover:text-teal-700">
-                      Read the guide →
-                    </Button>
+                    <h3 className="text-xl font-semibold mb-2">
+                      <a href={post.link} target="_blank" rel="noopener noreferrer" className="hover:text-teal-600 transition-colors">
+                        {post.title}
+                      </a>
+                    </h3>
+                    <p className="text-muted-foreground mb-4" dangerouslySetInnerHTML={{ __html: post.description }} />
+                    <span className="text-xs text-gray-500">{new Date(post.pubDate).toLocaleDateString()}</span>
                   </CardContent>
                 </Card>
               ))}
-            </div>
-
-            <div className="flex justify-center mt-12">
-              <Button variant="outline" className="border-teal-500 text-teal-600 hover:bg-teal-50">
-                View All Guides
-              </Button>
             </div>
           </div>
         </section>
