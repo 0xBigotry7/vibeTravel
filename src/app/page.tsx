@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { MapPin, Compass, Mail, TreePalmIcon as PalmTree, Users } from "lucide-react"
 import { fetchBeehiivPosts } from '@/lib/fetchBeehiivPosts'
+import HeroSection from '@/components/HeroSection'
 
 interface BeehiivPost {
   title: string;
@@ -49,59 +50,28 @@ export default async function Home() {
       </header>
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="/hero-image.jpg"
-              alt="Tropical beach paradise"
-              fill
-              priority
-              className="object-cover brightness-[0.85]"
-            />
-          </div>
-          <div className="container relative z-10 flex flex-col items-center text-center gap-6 px-4">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-md">
-              Discover Your Perfect <span className="text-teal-400">Vibe</span>
-            </h1>
-            <p className="max-w-[800px] text-lg md:text-xl text-white/90 drop-shadow">
-              Curated travel guides and personalized itineraries for the modern explorer
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 mt-6">
-              <Button size="lg" className="bg-teal-500 hover:bg-teal-600 text-white">
-                Explore Guides
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
-              >
-                Plan Your Trip
-              </Button>
-            </div>
-          </div>
-        </section>
+        <HeroSection />
 
         {/* Ultimate Travel Guides (Beehiiv Blog) */}
-        <section id="guides" className="py-20 bg-white">
+        <section id="guides" className="py-20">
           <div className="container px-4">
-            <div className="flex flex-col items-center text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Ultimate Travel Guides</h2>
-              <p className="text-muted-foreground max-w-[700px]">
+            <div className="flex flex-col items-center text-center mb-12 bg-black/40 rounded-lg p-8">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Ultimate Travel Guides</h2>
+              <p className="text-muted-foreground max-w-[700px] text-white/90">
                 Latest stories and tips from our Beehiiv-powered travel blog
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post: BeehiivPost) => (
-                <Card key={post.link} className="overflow-hidden group">
+                <Card key={post.link} className="overflow-hidden group bg-black/40 rounded-lg">
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">
-                      <a href={post.link} target="_blank" rel="noopener noreferrer" className="hover:text-teal-600 transition-colors">
+                    <h3 className="text-xl font-semibold mb-2 text-white">
+                      <a href={post.link} target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition-colors">
                         {post.title}
                       </a>
                     </h3>
-                    <p className="text-muted-foreground mb-4" dangerouslySetInnerHTML={{ __html: post.description }} />
-                    <span className="text-xs text-gray-500">{new Date(post.pubDate).toLocaleDateString()}</span>
+                    <p className="text-muted-foreground mb-4 text-white/90" dangerouslySetInnerHTML={{ __html: post.description }} />
+                    <span className="text-xs text-gray-300">{new Date(post.pubDate).toLocaleDateString()}</span>
                   </CardContent>
                 </Card>
               ))}
@@ -110,11 +80,11 @@ export default async function Home() {
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-20 bg-slate-50">
+        <section id="services" className="py-20">
           <div className="container px-4">
-            <div className="flex flex-col items-center text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Customized Travel Planning</h2>
-              <p className="text-muted-foreground max-w-[700px]">
+            <div className="flex flex-col items-center text-center mb-12 bg-black/40 rounded-lg p-8">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Customized Travel Planning</h2>
+              <p className="text-muted-foreground max-w-[700px] text-white/90">
                 Let us create your perfect itinerary based on your preferences, budget, and travel style
               </p>
             </div>
@@ -128,12 +98,12 @@ export default async function Home() {
 
               {["weekend", "week", "custom"].map((tab) => (
                 <TabsContent key={tab} value={tab} className="mt-0">
-                  <div className="grid md:grid-cols-2 gap-8 items-center">
+                  <div className="grid md:grid-cols-2 gap-8 items-center bg-black/40 rounded-lg p-8">
                     <div className="relative h-[400px] rounded-xl overflow-hidden">
                       <Image src={`/${tab}-trip.jpg`} alt="Travel planning" fill className="object-cover" />
                     </div>
                     <div className="space-y-6">
-                      <h3 className="text-2xl font-bold">
+                      <h3 className="text-2xl font-bold text-white">
                         {tab === "weekend"
                           ? "Perfect Weekend Escape"
                           : tab === "week"
@@ -160,8 +130,8 @@ export default async function Home() {
                               <Compass className="h-4 w-4 text-teal-600" />
                             </div>
                             <div>
-                              <h4 className="font-medium">{feature.title}</h4>
-                              <p className="text-sm text-muted-foreground">{feature.description}</p>
+                              <h4 className="font-medium text-white">{feature.title}</h4>
+                              <p className="text-sm text-white/90">{feature.description}</p>
                             </div>
                           </li>
                         ))}
@@ -176,12 +146,12 @@ export default async function Home() {
         </section>
 
         {/* Testimonials */}
-        <section className="py-20 bg-white">
+        <section className="py-20">
           <div className="container px-4">
-            <div className="flex flex-col items-center text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Happy Travelers</h2>
-              <p className="text-muted-foreground max-w-[700px]">
-                See what our community has to say about their VibeTravel experiences
+            <div className="flex flex-col items-center text-center mb-12 bg-black/40 rounded-lg p-8">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Happy Travelers</h2>
+              <p className="text-muted-foreground max-w-[700px] text-white/90">
+                Real stories from our community—see how VibeTravel guides and tips have inspired unforgettable journeys around the world.
               </p>
             </div>
 
@@ -230,32 +200,47 @@ export default async function Home() {
         </section>
 
         {/* Subscribe Section */}
-        <section id="subscribe" className="py-20 bg-teal-50">
+        <section id="subscribe" className="py-20">
           <div className="container px-4">
-            <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="max-w-3xl mx-auto bg-black/60 rounded-2xl shadow-lg overflow-hidden">
               <div className="grid md:grid-cols-2">
                 <div className="p-8 md:p-12 flex flex-col justify-center">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-4">Join Vibe Travel Club</h2>
-                  <p className="text-muted-foreground mb-6">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">Join Vibe Travel Club</h2>
+                  <p className="text-white/90 mb-6">
                     Subscribe to our newsletter for exclusive travel tips, guides, and special offers
                   </p>
                   <form className="space-y-4">
                     <div>
-                      <Input type="text" placeholder="Your name" className="border-slate-200" />
+                      <Input
+                        type="text"
+                        placeholder="Your name"
+                        className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-400"
+                      />
                     </div>
                     <div>
-                      <Input type="email" placeholder="Your email" className="border-slate-200" />
+                      <Input
+                        type="email"
+                        placeholder="Your email"
+                        className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-400"
+                      />
                     </div>
                     <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
                       Subscribe to Beehiiv Blog
                     </Button>
                   </form>
-                  <p className="text-xs text-muted-foreground mt-4">
+                  <p className="text-xs text-slate-400 mt-4">
                     By subscribing, you agree to our privacy policy and terms of service.
                   </p>
                 </div>
-                <div className="relative hidden md:block">
-                  <Image src="/subscribe-image.jpg" alt="Join our travel community" fill className="object-cover" />
+                <div className="relative hidden md:block bg-black/70">
+                  <div className="absolute inset-0 bg-black/70 z-10 rounded-r-2xl" />
+                  <Image
+                    src="/subscribe-image.jpg"
+                    alt="Join our travel community"
+                    fill
+                    className="object-cover"
+                    style={{ zIndex: 0 }}
+                  />
                 </div>
               </div>
             </div>
