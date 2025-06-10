@@ -2,7 +2,7 @@
 
 import { Canvas } from '@react-three/fiber';
 import { Stars } from '@react-three/drei';
-import ParticleLoveEffect from './ParticleLoveEffect';
+// import ParticleLoveEffect from './ParticleLoveEffect';
 
 export default function FullPage3DBackground() {
   return (
@@ -17,7 +17,7 @@ export default function FullPage3DBackground() {
           fade
           speed={1}
         />
-        <ParticleLoveEffect />
+        {/* <ParticleLoveEffect /> */}
         <ambientLight intensity={0.7} />
       </Canvas>
     </div>
