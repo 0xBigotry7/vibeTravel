@@ -2,18 +2,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { MapPin, Compass, Mail, TreePalmIcon as PalmTree, Users } from "lucide-react"
+import { MapPin, Mail, TreePalmIcon as PalmTree, Users } from "lucide-react"
 import { fetchBeehiivPosts } from '@/lib/fetchBeehiivPosts'
 import HeroSection from '@/components/HeroSection'
 import AnimatedSection from '@/components/AnimatedSection'
 import IconMotion from '@/components/IconMotion'
-import { smoothScrollTo } from '@/lib/utils'
 import Header from '@/components/Header'
 import ServicesTabs from '@/components/ServicesTabs'
-import { CardGlass } from '@/components/ui/card'
 import ContactForm from '@/components/ContactForm'
 
 interface BeehiivPost {

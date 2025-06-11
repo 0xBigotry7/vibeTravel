@@ -1,17 +1,16 @@
 "use client";
 import * as React from "react"
-import { motion } from "framer-motion";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils"
 import { ReactNode } from 'react';
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CardProps extends HTMLMotionProps<'div'> {
   glass?: boolean;
   shadow?: boolean;
   children: ReactNode;
-  motionProps?: any;
 }
 
-export const Card = ({ className, glass, shadow = true, children, motionProps, ...props }: CardProps) => {
+export const Card = ({ className, glass, shadow = true, children, ...props }: CardProps) => {
   return (
     <motion.div
       className={cn(
@@ -22,7 +21,6 @@ export const Card = ({ className, glass, shadow = true, children, motionProps, .
       )}
       whileHover={shadow ? { y: -8, boxShadow: "0 12px 48px 0 rgba(20,184,166,0.18)" } : undefined}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
-      {...motionProps}
       {...props}
     >
       {glass && <LiquidGlassBg />}

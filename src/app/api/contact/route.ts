@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     try {
       const file = await fs.readFile(FILE_PATH, 'utf8');
       submissions = JSON.parse(file);
-    } catch (e) {
+    } catch {
       // File may not exist yet
       submissions = [];
     }
