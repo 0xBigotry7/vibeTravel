@@ -14,6 +14,7 @@ import { smoothScrollTo } from '@/lib/utils'
 import Header from '@/components/Header'
 import ServicesTabs from '@/components/ServicesTabs'
 import { CardGlass } from '@/components/ui/card'
+import ContactForm from '@/components/ContactForm'
 
 interface BeehiivPost {
   title: string;
@@ -211,31 +212,7 @@ export default async function Home() {
               </div>
 
               <div>
-                <form className="space-y-4">
-                  <div>
-                    <Input
-                      type="text"
-                      placeholder="Your name"
-                      className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-400"
-                    />
-                  </div>
-                  <div>
-                    <Input
-                      type="email"
-                      placeholder="Your email"
-                      className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-400"
-                    />
-                  </div>
-                  <div>
-                    <Textarea
-                      placeholder="Your message"
-                      className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-400 min-h-[120px]"
-                    />
-                  </div>
-                  <Button type="submit" className="w-full bg-teal-500 hover:bg-teal-600">
-                    Send Message
-                  </Button>
-                </form>
+                <ContactForm />
               </div>
             </div>
           </div>
