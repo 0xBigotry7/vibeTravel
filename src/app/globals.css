@@ -99,3 +99,10 @@ button:focus-visible {
 button:active {
   filter: brightness(0.97);
 }
+
+.shimmer-mobile {
+  opacity: 0.7 !important;
+  filter: blur(3px) brightness(1.2) !important;
+  width: 120%;
+  left: -40%;
+}

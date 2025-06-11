@@ -64,7 +64,7 @@ export default function HeroSection() {
   } : { x: 0, y: 0 };
 
   return (
-    <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-10 sm:py-0">
       {/* Background parallax image */}
       <motion.div
         className="absolute inset-0 w-full h-full z-0"
@@ -80,7 +80,7 @@ export default function HeroSection() {
         />
         <div className="absolute inset-0 bg-black/40" />
       </motion.div>
-      {/* Foreground animated blob/gradient */}
+      {/* Foreground animated blob/gradient (desktop) */}
       <motion.div
         className="absolute left-1/2 top-1/2 z-10 pointer-events-none"
         style={{
@@ -101,6 +101,19 @@ export default function HeroSection() {
           <ellipse cx="210" cy="160" rx="180" ry="120" fill="url(#blobGrad)" />
         </svg>
       </motion.div>
+      {/* Foreground animated blob/gradient (mobile) */}
+      <div className="absolute left-1/2 top-[60%] z-10 pointer-events-none block md:hidden" style={{ transform: 'translateX(-50%)' }} aria-hidden>
+        <svg width="220" height="120" viewBox="0 0 220 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="blobGradMobile" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
+              <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.7" />
+              <stop offset="60%" stopColor="#14b8a6" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#f472b6" stopOpacity="0.3" />
+            </radialGradient>
+          </defs>
+          <ellipse cx="110" cy="60" rx="90" ry="50" fill="url(#blobGradMobile)" />
+        </svg>
+      </div>
       {/* Hero content */}
       <motion.div
         ref={ref}
@@ -111,37 +124,55 @@ export default function HeroSection() {
         style={mouseHeadline}
       >
         <motion.h1
-          className="text-4xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-md relative"
+          className="text-4xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-md relative leading-tight"
+          style={isDesktop ? {
+            textShadow: '0 2px 24px rgba(45,212,191,0.25), 0 1px 0 #fff',
+            filter: undefined,
+          } : {
+            textShadow: '0 2px 24px rgba(45,212,191,0.25), 0 1px 0 #fff, 0 0 16px #14b8a6',
+            filter: 'drop-shadow(0 0 12px #14b8a6)',
+          }}
           variants={item}
         >
           Discover Your{' '}
           <span
-            className="relative inline-block bg-gradient-to-r from-teal-400 via-cyan-400 via-30% via-pink-400 via-60% to-yellow-300 bg-clip-text text-transparent animate-gradient-x font-extrabold drop-shadow-[0_2px_24px_rgba(45,212,191,0.25)]"
-            style={{
+            className={
+              `relative inline-block bg-gradient-to-r from-teal-400 via-cyan-400 via-30% via-pink-400 via-60% to-yellow-300 bg-clip-text text-transparent animate-gradient-x font-extrabold drop-shadow-[0_2px_24px_rgba(45,212,191,0.25)]` +
+              (isDesktop ? '' : ' shimmer-mobile')
+            }
+            style={isDesktop ? {
               backgroundSize: '350% 350%',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               textShadow: '0 2px 24px rgba(45,212,191,0.25), 0 1px 0 #fff',
+              filter: undefined,
+            } : {
+              backgroundSize: '350% 350%',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: '0 2px 24px rgba(45,212,191,0.25), 0 1px 0 #fff, 0 0 16px #14b8a6',
+              filter: 'drop-shadow(0 0 12px #14b8a6)',
             }}
           >
             Perfect Vibe
-            <span className="shimmer-effect" aria-hidden />
+            <span className={isDesktop ? 'shimmer-effect' : 'shimmer-effect shimmer-mobile'} aria-hidden />
           </span>
         </motion.h1>
         <motion.p
-          className="max-w-[800px] text-lg md:text-xl text-white/90 drop-shadow"
+          className="max-w-[800px] text-lg xs:text-xl md:text-xl text-white/90 drop-shadow"
           variants={item}
         >
           Curated travel guides and personalized itineraries for the modern explorer
         </motion.p>
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 mt-6"
+          className="flex flex-col sm:flex-row gap-4 mt-6 w-full max-w-md"
           variants={item}
         >
           <Button
             size="lg"
-            className="bg-teal-500 hover:bg-teal-600 text-white"
+            className="bg-teal-500 hover:bg-teal-600 text-white w-full py-4 text-lg rounded-xl shadow-lg"
             type="button"
             onClick={() => smoothScrollTo('guides')}
           >
@@ -150,7 +181,7 @@ export default function HeroSection() {
           <Button
             size="lg"
             variant="outline"
-            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 w-full py-4 text-lg rounded-xl shadow-lg"
             type="button"
             onClick={() => smoothScrollTo('contact')}
           >
@@ -160,7 +191,7 @@ export default function HeroSection() {
       </motion.div>
       {/* Scroll-down indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center"
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8, ease: 'easeOut' }}
