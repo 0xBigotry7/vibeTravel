@@ -8,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { MapPin, Compass, Mail, TreePalmIcon as PalmTree, Users } from "lucide-react"
 import { fetchBeehiivPosts } from '@/lib/fetchBeehiivPosts'
 import HeroSection from '@/components/HeroSection'
+import AnimatedSection from '@/components/AnimatedSection'
+import IconMotion from '@/components/IconMotion'
 
 interface BeehiivPost {
   title: string;
@@ -24,7 +26,9 @@ export default async function Home() {
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <PalmTree className="h-6 w-6 text-teal-500" />
+            <IconMotion>
+              <PalmTree className="h-6 w-6 text-teal-500" />
+            </IconMotion>
             <span className="text-xl font-bold tracking-wider">VIBETRAVEL.CLUB</span>
           </div>
           <nav className="hidden md:flex gap-6">
@@ -53,7 +57,7 @@ export default async function Home() {
         <HeroSection />
 
         {/* Ultimate Travel Guides (Beehiiv Blog) */}
-        <section id="guides" className="py-20">
+        <AnimatedSection id="guides" className="py-20">
           <div className="container px-4">
             <div className="flex flex-col items-center text-center mb-12 bg-black/40 rounded-lg p-8">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Ultimate Travel Guides</h2>
@@ -77,10 +81,10 @@ export default async function Home() {
               ))}
             </div>
           </div>
-        </section>
+        </AnimatedSection>
 
         {/* Services Section */}
-        <section id="services" className="py-20">
+        <AnimatedSection id="services" className="py-20">
           <div className="container px-4">
             <div className="flex flex-col items-center text-center mb-12 bg-black/40 rounded-lg p-8">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Customized Travel Planning</h2>
@@ -127,7 +131,9 @@ export default async function Home() {
                         ].map((feature, index) => (
                           <li key={index} className="flex gap-3">
                             <div className="mt-1 bg-teal-100 rounded-full p-1">
-                              <Compass className="h-4 w-4 text-teal-600" />
+                              <IconMotion>
+                                <Compass className="h-4 w-4 text-teal-600" />
+                              </IconMotion>
                             </div>
                             <div>
                               <h4 className="font-medium text-white">{feature.title}</h4>
@@ -143,10 +149,10 @@ export default async function Home() {
               ))}
             </Tabs>
           </div>
-        </section>
+        </AnimatedSection>
 
         {/* Testimonials */}
-        <section className="py-20">
+        <AnimatedSection className="py-20">
           <div className="container px-4">
             <div className="flex flex-col items-center text-center mb-12 bg-black/40 rounded-lg p-8">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Happy Travelers</h2>
@@ -189,7 +195,9 @@ export default async function Home() {
                     <div className="mt-6 pt-6 border-t">
                       <p className="font-medium">{testimonial.name}</p>
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
-                        <MapPin className="h-3 w-3" /> {testimonial.location}
+                        <IconMotion>
+                          <MapPin className="h-3 w-3" />
+                        </IconMotion> {testimonial.location}
                       </p>
                     </div>
                   </div>
@@ -197,10 +205,10 @@ export default async function Home() {
               ))}
             </div>
           </div>
-        </section>
+        </AnimatedSection>
 
         {/* Subscribe Section */}
-        <section id="subscribe" className="py-20">
+        <AnimatedSection id="subscribe" className="py-20">
           <div className="container px-4">
             <div className="max-w-3xl mx-auto bg-black/60 rounded-2xl shadow-lg overflow-hidden">
               <div className="grid md:grid-cols-2">
@@ -245,10 +253,10 @@ export default async function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </AnimatedSection>
 
         {/* Contact Section */}
-        <section id="contact" className="py-20 bg-slate-900 text-white">
+        <AnimatedSection id="contact" className="py-20 bg-slate-900 text-white">
           <div className="container px-4">
             <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
               <div>
@@ -260,7 +268,9 @@ export default async function Home() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="bg-teal-500/20 p-2 rounded-full">
-                      <Mail className="h-5 w-5 text-teal-400" />
+                      <IconMotion>
+                        <Mail className="h-5 w-5 text-teal-400" />
+                      </IconMotion>
                     </div>
                     <div>
                       <p className="text-sm text-slate-300">Email us at</p>
@@ -269,7 +279,9 @@ export default async function Home() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="bg-teal-500/20 p-2 rounded-full">
-                      <Users className="h-5 w-5 text-teal-400" />
+                      <IconMotion>
+                        <Users className="h-5 w-5 text-teal-400" />
+                      </IconMotion>
                     </div>
                     <div>
                       <p className="text-sm text-slate-300">Follow us</p>
@@ -318,7 +330,7 @@ export default async function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </AnimatedSection>
       </main>
 
       {/* Footer */}
@@ -327,7 +339,9 @@ export default async function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
               <div className="flex items-center gap-2 mb-4">
-                <PalmTree className="h-6 w-6 text-teal-500" />
+                <IconMotion>
+                  <PalmTree className="h-6 w-6 text-teal-500" />
+                </IconMotion>
                 <span className="text-xl font-bold tracking-wider text-white">VIBETRAVEL.CLUB</span>
               </div>
               <p className="max-w-md">

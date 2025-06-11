@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 // import FullPage3DBackground from '@/components/FullPage3DBackground'
 import LegendaryCursorEffect from '@/components/LegendaryCursorEffect'
+import PageTransition from '@/components/PageTransition'
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -24,7 +25,7 @@ export default function RootLayout({
         <LegendaryCursorEffect />
         {/* <FullPage3DBackground /> */}
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          {children}
+          <PageTransition>{children}</PageTransition>
         </ThemeProvider>
       </body>
     </html>
