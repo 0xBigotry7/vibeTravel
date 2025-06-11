@@ -10,6 +10,10 @@ import { fetchBeehiivPosts } from '@/lib/fetchBeehiivPosts'
 import HeroSection from '@/components/HeroSection'
 import AnimatedSection from '@/components/AnimatedSection'
 import IconMotion from '@/components/IconMotion'
+import { smoothScrollTo } from '@/lib/utils'
+import Header from '@/components/Header'
+import ServicesTabs from '@/components/ServicesTabs'
+import { CardGlass } from '@/components/ui/card'
 
 interface BeehiivPost {
   title: string;
@@ -22,40 +26,9 @@ export default async function Home() {
   const posts: BeehiivPost[] = await fetchBeehiivPosts('https://rss.beehiiv.com/feeds/EiaFGtMMhr.xml', 5)
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Navigation */}
-      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <IconMotion>
-              <PalmTree className="h-6 w-6 text-teal-500" />
-            </IconMotion>
-            <span className="text-xl font-bold tracking-wider">VIBETRAVEL.CLUB</span>
-          </div>
-          <nav className="hidden md:flex gap-6">
-            <Link href="#guides" className="text-sm font-medium hover:text-teal-500 transition-colors">
-              Travel Guides
-            </Link>
-            <Link href="#services" className="text-sm font-medium hover:text-teal-500 transition-colors">
-              Services
-            </Link>
-            <Link href="#subscribe" className="text-sm font-medium hover:text-teal-500 transition-colors">
-              Subscribe
-            </Link>
-            <Link href="#contact" className="text-sm font-medium hover:text-teal-500 transition-colors">
-              Contact
-            </Link>
-          </nav>
-          <div>
-            <Button variant="default" className="bg-teal-500 hover:bg-teal-600">
-              Join the Club
-            </Button>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className="flex-1">
         <HeroSection />
-
         {/* Ultimate Travel Guides (Beehiiv Blog) */}
         <AnimatedSection id="guides" className="py-20">
           <div className="container px-4">
@@ -82,73 +55,9 @@ export default async function Home() {
             </div>
           </div>
         </AnimatedSection>
-
         {/* Services Section */}
         <AnimatedSection id="services" className="py-20">
-          <div className="container px-4">
-            <div className="flex flex-col items-center text-center mb-12 bg-black/40 rounded-lg p-8">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Customized Travel Planning</h2>
-              <p className="text-muted-foreground max-w-[700px] text-white/90">
-                Let us create your perfect itinerary based on your preferences, budget, and travel style
-              </p>
-            </div>
-
-            <Tabs defaultValue="weekend" className="max-w-4xl mx-auto">
-              <TabsList className="grid w-full grid-cols-3 mb-8">
-                <TabsTrigger value="weekend">Weekend Getaway</TabsTrigger>
-                <TabsTrigger value="week">Week-long Adventure</TabsTrigger>
-                <TabsTrigger value="custom">Custom Journey</TabsTrigger>
-              </TabsList>
-
-              {["weekend", "week", "custom"].map((tab) => (
-                <TabsContent key={tab} value={tab} className="mt-0">
-                  <div className="grid md:grid-cols-2 gap-8 items-center bg-black/40 rounded-lg p-8">
-                    <div className="relative h-[400px] rounded-xl overflow-hidden">
-                      <Image src={`/${tab}-trip.jpg`} alt="Travel planning" fill className="object-cover" />
-                    </div>
-                    <div className="space-y-6">
-                      <h3 className="text-2xl font-bold text-white">
-                        {tab === "weekend"
-                          ? "Perfect Weekend Escape"
-                          : tab === "week"
-                            ? "Week of Exploration"
-                            : "Your Dream Journey"}
-                      </h3>
-                      <ul className="space-y-4">
-                        {[
-                          {
-                            title: "Personalized Itinerary",
-                            description: "Tailored to your interests and travel style",
-                          },
-                          {
-                            title: "Local Recommendations",
-                            description: "Hidden gems and authentic experiences",
-                          },
-                          {
-                            title: "Booking Assistance",
-                            description: "Help with accommodations and activities",
-                          },
-                        ].map((feature, index) => (
-                          <li key={index} className="flex gap-3">
-                            <div className="mt-1 bg-teal-100 rounded-full p-1">
-                              <IconMotion>
-                                <Compass className="h-4 w-4 text-teal-600" />
-                              </IconMotion>
-                            </div>
-                            <div>
-                              <h4 className="font-medium text-white">{feature.title}</h4>
-                              <p className="text-sm text-white/90">{feature.description}</p>
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                      <Button className="bg-teal-500 hover:bg-teal-600 mt-4">Get Started</Button>
-                    </div>
-                  </div>
-                </TabsContent>
-              ))}
-            </Tabs>
-          </div>
+          <ServicesTabs />
         </AnimatedSection>
 
         {/* Testimonials */}

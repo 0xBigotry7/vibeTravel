@@ -4,6 +4,7 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { motion } from 'framer-motion'
+import { useRef } from 'react'
 
 import { cn } from "@/lib/utils"
 
@@ -58,6 +59,25 @@ const omitDragProps = (props: Record<string, unknown>) => {
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const rippleRef = useRef<HTMLSpanElement>(null);
+    // Ripple effect handler
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (variant !== 'default') return;
+      const button = e.currentTarget;
+      const ripple = rippleRef.current;
+      if (!ripple) return;
+      const rect = button.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      ripple.style.width = ripple.style.height = `${size}px`;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      ripple.classList.remove('ripple-animate');
+      // Force reflow
+      void ripple.offsetWidth;
+      ripple.classList.add('ripple-animate');
+    };
     if (asChild) {
       return (
         <Slot
@@ -71,11 +91,26 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <motion.button
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        whileHover={{ scale: 1.045, boxShadow: '0 4px 24px 0 rgba(20,184,166,0.18)' }}
+        whileHover={{ scale: 1.055, boxShadow: variant === 'default' ? '0 4px 32px 0 rgba(20,184,166,0.22)' : undefined }}
         whileTap={{ scale: 0.97 }}
         transition={{ type: 'spring', stiffness: 400, damping: 22 }}
         {...omitDragProps(props)}
-      />
+        onClick={e => {
+          handleClick(e);
+          props.onClick?.(e);
+        }}
+        style={{ position: 'relative', overflow: 'hidden' }}
+      >
+        {props.children}
+        {/* Ripple effect for primary buttons */}
+        {variant === 'default' && (
+          <span
+            ref={rippleRef}
+            className="button-ripple"
+            aria-hidden
+          />
+        )}
+      </motion.button>
     );
   }
 )
