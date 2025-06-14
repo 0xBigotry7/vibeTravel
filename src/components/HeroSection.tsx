@@ -172,20 +172,25 @@ export default function HeroSection() {
         >
           <Button
             size="lg"
-            className="bg-teal-500 hover:bg-teal-600 text-white w-full py-4 text-lg rounded-xl shadow-lg"
+            className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white w-full py-4 text-lg rounded-xl shadow-lg font-semibold"
             type="button"
-            onClick={() => smoothScrollTo('guides')}
+            onClick={() => {
+              const element = document.getElementById('get-started-form');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }}
           >
-            Explore Guides
+            Get Started
           </Button>
           <Button
             size="lg"
             variant="outline"
             className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 w-full py-4 text-lg rounded-xl shadow-lg"
             type="button"
-            onClick={() => smoothScrollTo('contact')}
+            onClick={() => smoothScrollTo('guides')}
           >
-            Plan Your Trip
+            Explore Guides
           </Button>
         </motion.div>
       </motion.div>

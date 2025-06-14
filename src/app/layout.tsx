@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 // import FullPage3DBackground from '@/components/FullPage3DBackground'
 import LegendaryCursorEffect from '@/components/LegendaryCursorEffect'
 import PageTransition from '@/components/PageTransition'
+import { ToastProvider } from "@/contexts/ToastContext"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,7 +26,9 @@ export default function RootLayout({
         <LegendaryCursorEffect />
         {/* <FullPage3DBackground /> */}
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <PageTransition>{children}</PageTransition>
+          <ToastProvider>
+            <PageTransition>{children}</PageTransition>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

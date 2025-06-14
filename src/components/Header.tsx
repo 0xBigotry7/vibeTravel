@@ -9,7 +9,7 @@ import { useEffect, useState, useRef } from 'react';
 const NAV_LINKS = [
   { href: '#guides', label: 'Travel Guides', id: 'guides' },
   { href: '#services', label: 'Services', id: 'services' },
-  { href: '#subscribe', label: 'Subscribe', id: 'subscribe' },
+  { href: '#about', label: 'About', id: 'about' },
   { href: '#contact', label: 'Contact', id: 'contact' },
 ];
 
@@ -142,7 +142,20 @@ export default function Header() {
         >
           {mobileOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
         </button>
-        <div className="hidden md:block">
+        <div className="hidden md:flex gap-3">
+          <Button
+            variant="outline"
+            className="border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white"
+            type="button"
+            onClick={() => {
+              const element = document.getElementById('get-started-form');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }}
+          >
+            Get Started
+          </Button>
           <Button
             variant="default"
             className="bg-teal-500 hover:bg-teal-600"
@@ -181,14 +194,30 @@ export default function Header() {
               {link.label}
             </button>
           ))}
-          <Button
-            variant="default"
-            className="bg-teal-500 hover:bg-teal-600 w-full max-w-xs text-lg mt-4"
-            type="button"
-            onClick={() => { setMobileOpen(false); smoothScrollTo('contact'); }}
-          >
-            Join the Club
-          </Button>
+          <div className="flex flex-col gap-3 w-full max-w-xs mt-4">
+            <Button
+              variant="outline"
+              className="border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white w-full text-lg"
+              type="button"
+              onClick={() => { 
+                setMobileOpen(false); 
+                const element = document.getElementById('get-started-form');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+              }}
+            >
+              Get Started
+            </Button>
+            <Button
+              variant="default"
+              className="bg-teal-500 hover:bg-teal-600 w-full text-lg"
+              type="button"
+              onClick={() => { setMobileOpen(false); smoothScrollTo('contact'); }}
+            >
+              Join the Club
+            </Button>
+          </div>
         </div>
       )}
     </header>
